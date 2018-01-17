@@ -1,0 +1,12 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>REsult</title>
+</head>
+<body>
+<p th:text="'Title: ' + ${book.bookTitle}" />
+<p th:text="'Author: ' + ${book.bookAuthor}" />
+<p th:text="'Description:'+ ${book.bookPath}" />
+<p th:text="'View Book:'+ ${book.bookPath}" />
+<a href="/add">Submit another message</a></body>
+</html>
