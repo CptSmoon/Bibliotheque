@@ -4,8 +4,9 @@
     <title>Liste des livres</title>
 </head>
 <body>
-<table>
+<table border="1">
     <tr>
+        <th>Book ID</th>
         <th>Book title</th>
         <th>Book Author</th>
         <th>Book Description</th>
@@ -13,6 +14,7 @@
     </tr>
     <th:block th:each="book : ${books}">
         <tr>
+            <td th:text="${book.bookID}"></td>
             <td th:text="${book.bookTitle}"></td>
             <td th:text="${book.bookAuthor}"> </td>
             <td th:text="${book.bookDescription}"> </td>
@@ -20,6 +22,8 @@
         </tr>
     </th:block>
 </table>
-<a href="/add">Add another book</a></body>
+<a href="/addBook">Add another book</a>
+
+</body>
 
 </html>
