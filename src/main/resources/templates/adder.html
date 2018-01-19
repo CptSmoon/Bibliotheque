@@ -6,7 +6,7 @@
 <body>
 <h1>Add a Book</h1>
 
-<form method="POST" action="#"  th:action="@{/addBook}" th:object="${book}" >
+<form method="POST" action="#"  th:action="@{/addBook}" th:object="${book}" enctype="multipart/form-data" >
     <table>
         <tr>
             <td><label for="title" >Book Title </label></td>
@@ -21,10 +21,13 @@
             <td><input id="author" th:field="*{bookAuthor}"/></td>
         </tr>
         <tr>
-            <td><label for="path">Book Path</label></td>
-            <td><input id="path" th:field="*{bookPath}"/></td>
+            <td><label path="file">Book path:</label></td>
+            <td><input type="file" name="file" /></td>
         </tr>
-
+        <tr>
+            <td><label path="file">Book image:</label></td>
+            <td><input type="file" name="image" /></td>
+        </tr>
         <tr>
             <td><input type="submit" value="Submit"/><input type="reset" value="Reset" /></td>
         </tr>

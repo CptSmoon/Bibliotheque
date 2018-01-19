@@ -15,7 +15,15 @@ public class Book {
     private String bookDescription;
     private String bookAuthor;
     private String bookPath;
+    private String bookImage;
 
+    public String getBookImage() {
+        return bookImage;
+    }
+
+    public void setBookImage(String bookImage) {
+        this.bookImage = bookImage;
+    }
 
     public String getBookDescription() {
         return bookDescription;
