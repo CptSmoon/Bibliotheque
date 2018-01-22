@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Book {
@@ -11,11 +12,19 @@ public class Book {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer bookID;
 
+    @NotNull
     private String bookTitle;
+
     private String bookDescription;
+
+    @NotNull
     private String bookAuthor;
+
+    @NotNull
     private String bookPath;
+
     private String bookImage;
+
 
     public String getBookImage() {
         return bookImage;

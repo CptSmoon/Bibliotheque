@@ -9,7 +9,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-
+import org.apache.commons.lang3.RandomStringUtils;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -44,7 +44,8 @@ public class BookController {
             try {
                 // Get the file and save it somewhere
                 byte[] bytes = file.getBytes();
-                Path path = Paths.get(PATH_UPLOAD_FOLDER +book.getBookID()+ file.getOriginalFilename());
+                String ran1 = RandomStringUtils.randomAlphabetic(6);
+                Path path = Paths.get(PATH_UPLOAD_FOLDER +ran1+"_"+ file.getOriginalFilename());
                 Files.write(path, bytes);
                 book.setBookPath(file.getOriginalFilename());
 
@@ -57,10 +58,10 @@ public class BookController {
                 try {
                     // Get the image and save it somewhere
                     byte[] bytes1 = image.getBytes();
-                    Path path1 = Paths.get(IMAGE_UPLOAD_FOLDER +book.getBookID()+ image.getOriginalFilename());
+                    String ran2 = RandomStringUtils.randomAlphabetic(6);
+                    Path path1 = Paths.get(IMAGE_UPLOAD_FOLDER +ran2+"_"+ image.getOriginalFilename());
                     Files.write(path1, bytes1);
                     book.setBookImage(image.getOriginalFilename());
-
                 } catch (IOException e) {
                     book.setBookImage("alt.png");
                 }
