@@ -1,20 +1,41 @@
 package com.example.demo.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.example.demo.validators.UniqueEmail;
+import org.hibernate.validator.constraints.Email;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.io.Serializable;
+
+
+//implementing Serializable to be able to make it a 3 ID bean
 @Entity
-public class User {
+public class User implements Serializable{
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer userID;
 
+    @NotNull
+    @Size(min=2, max=30)
     private String userFirstName;
+
+    @NotNull
+    @Size(min=2, max=40)
     private String userLastName;
+
+    @UniqueEmail
+    @NotNull
+    @Email
     private String userMail;
+
+    @Id
+    @NotNull
+    @Size(min=5, max=20)
     private String userLogin;
+
+    @NotNull
+    @Size(min=8, max=30)
     private String userPassword;
 
 
