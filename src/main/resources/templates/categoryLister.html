@@ -1,0 +1,21 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Liste des livres</title>
+</head>
+<body>
+<table border="1">
+    <tr>
+        <th>Category name:</th>
+    </tr>
+    <th:block th:each="cat : ${categories}">
+        <tr>
+            <td th:text="${cat.categoryName}"></td>
+        </tr>
+    </th:block>
+</table>
+<a href="/category/add">Add another category</a>
+
+</body>
+
+</html>

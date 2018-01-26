@@ -5,9 +5,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
 public class Book {
+
+    //Attributs
+
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer bookID;
@@ -25,6 +29,18 @@ public class Book {
 
     private String bookImage;
 
+    @NotNull
+    private List<Category> bookCategories;
+
+    //Getters et setters
+
+    public List<Category> getBookCategories() {
+        return bookCategories;
+    }
+
+    public void setBookCategories(List<Category> bookCategories) {
+        this.bookCategories = bookCategories;
+    }
 
     public String getBookImage() {
         return bookImage;
@@ -72,5 +88,14 @@ public class Book {
 
     public void setBookID(Integer bookID) {
         this.bookID = bookID;
+    }
+
+    //Mes fonctions
+
+    public void displayBookCategories(){
+        int i;
+        for (i=0; i<bookCategories.size();i++){
+            System.out.println(bookCategories.get(i));
+        }
     }
 }

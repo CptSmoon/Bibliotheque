@@ -17,7 +17,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @Controller
-
+@RequestMapping("/book")
 public class BookController {
     @Autowired
     // This means to get the bean called userRepository
@@ -28,7 +28,7 @@ public class BookController {
     public static String PATH_UPLOAD_FOLDER = "src/main/resources/static/path/";
 
 
-    @GetMapping("/addBook")
+    @GetMapping("/add")
     public String addForm(ModelMap model) {
 
         model.addAttribute("book", new Book());
@@ -37,7 +37,7 @@ public class BookController {
         return "adder";
     }
 
-    @PostMapping("/addBook")
+    @PostMapping("/add")
     public  ModelAndView addSubmit(@ModelAttribute Book book,@RequestParam("image") MultipartFile image, @RequestParam("file") MultipartFile file,ModelMap model) {
 
         if(!file.isEmpty()) {
@@ -46,8 +46,9 @@ public class BookController {
                 // Get the file and save it somewhere
                 byte[] bytes = file.getBytes();
                 String ran1 = RandomStringUtils.randomAlphabetic(6);
-                Path path = Paths.get(PATH_UPLOAD_FOLDER +ran1+"_"+ file.getOriginalFilename());
-                Files.write(path, bytes);
+                String name1 = PATH_UPLOAD_FOLDER +ran1+"_"+ file.getOriginalFilename();
+                Path path1 = Paths.get(name1);
+                Files.write(path1, bytes);
                 book.setBookPath(file.getOriginalFilename());
 
             } catch (IOException e) {
@@ -60,34 +61,35 @@ public class BookController {
                     // Get the image and save it somewhere
                     byte[] bytes1 = image.getBytes();
                     String ran2 = RandomStringUtils.randomAlphabetic(6);
-                    Path path1 = Paths.get(IMAGE_UPLOAD_FOLDER +ran2+"_"+ image.getOriginalFilename());
-                    Files.write(path1, bytes1);
-                    book.setBookImage(image.getOriginalFilename());
+                    String name2 = IMAGE_UPLOAD_FOLDER +ran2+"_"+ image.getOriginalFilename();
+                    Path path2 = Paths.get(name2);
+                    Files.write(path2, bytes1);
+                    book.setBookImage(name2);
                 } catch (IOException e) {
                     book.setBookImage("alt.png");
                 }
             }
             else{
                 System.out.println(" ----> " + book.getBookID());
-                book.setBookImage(BookRepository.findOne(book.getBookID()).getBookImage());
+                book.setBookImage("alt.png");
             }
         }
         else{
             System.out.println(" ----> " + book.getBookID());
-            book.setBookPath(BookRepository.findOne(book.getBookID()).getBookPath());
+            book.setBookPath("no path");
         }
 
         BookRepository.save(book);
-        return new ModelAndView("redirect:/allBooks");
+        return new ModelAndView("redirect:/book/all");
     }
 
-    @GetMapping(path="/allBooks")
+    @GetMapping(path="/all")
     public String getAllBooks(Model model) {
         model.addAttribute("books", BookRepository.findAll());
         return "lister";
     }
 
-    @GetMapping("/editBook/{id}")
+    @GetMapping("/edit/{id}")
     public String editForm(@PathVariable("id")Integer id,Model model) {
         Book b = BookRepository.findOne(id);
         System.out.println(b);
@@ -95,13 +97,13 @@ public class BookController {
         return "edit";
     }
 
-    @PostMapping("/editBook")
+    @PostMapping("/edit")
     public  @ResponseBody String editSubmit(@ModelAttribute Book book) {
         BookRepository.save(book);
         return "edit";
     }
 
-    @GetMapping("/deleteBook/{id}")
+    @GetMapping("/delete/{id}")
     public String deleteBook(@PathVariable("id")Integer id,Model model) {
         BookRepository.delete(id);
         return "lister" ;

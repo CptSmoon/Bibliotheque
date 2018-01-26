@@ -9,7 +9,9 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
+/*
 @Constraint(validatedBy = UniqueEmailValidator.class)
+*/
 public @interface UniqueEmail {
         String message() default "{com.example.dempo.UniqueEmail.message}";
         Class<?>[] groups() default {};
