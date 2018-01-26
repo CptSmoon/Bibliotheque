@@ -11,17 +11,17 @@ import java.io.Serializable;
 
 //implementing Serializable to be able to make it a 3 ID bean
 @Entity
-public class User implements Serializable{
+public class User implements Serializable {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer userID;
 
     @NotNull
-    @Size(min=2, max=30)
+    @Size(min = 2, max = 30)
     private String userFirstName;
 
     @NotNull
-    @Size(min=2, max=40)
+    @Size(min = 2, max = 40)
     private String userLastName;
 
     @UniqueEmail
@@ -29,13 +29,12 @@ public class User implements Serializable{
     @Email
     private String userMail;
 
-    @Id
     @NotNull
-    @Size(min=5, max=20)
+    @Size(min = 5, max = 20)
     private String userLogin;
 
     @NotNull
-    @Size(min=8, max=30)
+    @Size(min = 8, max = 30)
     private String userPassword;
 
 
