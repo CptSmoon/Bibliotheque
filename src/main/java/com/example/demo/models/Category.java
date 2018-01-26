@@ -1,8 +1,8 @@
 package com.example.demo.models;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
 public class Category {
@@ -12,6 +12,9 @@ public class Category {
     @NotNull
     private String categoryName;
 
+    @ManyToMany(mappedBy = "bookCategories")
+    private List<Book> categoryBooks;
+
     //Getters et setters
 
     public String getCategoryName() {
@@ -20,5 +23,16 @@ public class Category {
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
+
     }
+
+
+    public List<Book> getCategoryBooks() {
+        return categoryBooks;
+    }
+
+    public void setCategoryBooks(List<Book> categoryBooks) {
+        this.categoryBooks = categoryBooks;
+    }
+
 }

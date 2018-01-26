@@ -1,9 +1,6 @@
 package com.example.demo.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -29,7 +26,9 @@ public class Book {
 
     private String bookImage;
 
-    @NotNull
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "book_category", joinColumns = @JoinColumn(name = "bookID"), inverseJoinColumns = @JoinColumn(name = "categoryName"))
     private List<Category> bookCategories;
 
     //Getters et setters
