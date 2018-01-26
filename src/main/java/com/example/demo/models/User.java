@@ -1,6 +1,5 @@
 package com.example.demo.models;
 
-import com.example.demo.validators.UniqueEmail;
 import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
@@ -11,7 +10,7 @@ import java.io.Serializable;
 
 //implementing Serializable to be able to make it a 3 ID bean
 @Entity
-public class User implements Serializable {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer userID;
@@ -24,7 +23,6 @@ public class User implements Serializable {
     @Size(min = 2, max = 40)
     private String userLastName;
 
-    @UniqueEmail
     @NotNull
     @Email
     private String userMail;
