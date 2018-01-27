@@ -1,15 +1,13 @@
 package com.example.demo.controller;
 
+import com.example.demo.models.Book;
 import com.example.demo.models.Category;
 import com.example.demo.repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -35,7 +33,9 @@ public class CategoryController {
         if (bindingResult.hasErrors()) {
             return new ModelAndView("categoryAdder");
         }
-        categoryRepository.save(cat);
+        if (categoryRepository.findAllByCategoryName(cat.getCategoryName()).size()==0){
+            categoryRepository.save(cat);
+        }
         System.out.println("add setter reached");
         return new ModelAndView("redirect:/category/all");
     }
@@ -45,5 +45,18 @@ public class CategoryController {
     public String getAllCategories(Model model) {
         model.addAttribute("categories", categoryRepository.findAll());
         return "categoryLister";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String editForm(@PathVariable("id")Integer id, Model model) {
+        Category c = categoryRepository.findOne(id);
+        model.addAttribute("cat", c );
+        return "categoryEdit";
+    }
+
+    @PostMapping("/edit")
+    public ModelAndView editSubmit(@ModelAttribute Category cat) {
+        categoryRepository.save(cat);
+        return new ModelAndView("redirect:/category/all");
     }
 }

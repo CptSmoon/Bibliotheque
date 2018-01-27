@@ -30,10 +30,7 @@ public class BookController {
 
     @GetMapping("/add")
     public String addForm(ModelMap model) {
-
         model.addAttribute("book", new Book());
-
-
         return "adder";
     }
 
@@ -46,8 +43,8 @@ public class BookController {
                 // Get the file and save it somewhere
                 byte[] bytes = file.getBytes();
                 String ran1 = RandomStringUtils.randomAlphabetic(6);
-                String name1 = PATH_UPLOAD_FOLDER +ran1+"_"+ file.getOriginalFilename();
-                Path path1 = Paths.get(name1);
+                String name1 = ran1+"_"+ file.getOriginalFilename();
+                Path path1 = Paths.get(PATH_UPLOAD_FOLDER +name1);
                 Files.write(path1, bytes);
                 book.setBookPath(file.getOriginalFilename());
 
@@ -61,8 +58,8 @@ public class BookController {
                     // Get the image and save it somewhere
                     byte[] bytes1 = image.getBytes();
                     String ran2 = RandomStringUtils.randomAlphabetic(6);
-                    String name2 = IMAGE_UPLOAD_FOLDER +ran2+"_"+ image.getOriginalFilename();
-                    Path path2 = Paths.get(name2);
+                    String name2 = ran2+"_"+ image.getOriginalFilename();
+                    Path path2 = Paths.get(IMAGE_UPLOAD_FOLDER + name2);
                     Files.write(path2, bytes1);
                     book.setBookImage(name2);
                 } catch (IOException e) {
@@ -70,7 +67,6 @@ public class BookController {
                 }
             }
             else{
-                System.out.println(" ----> " + book.getBookID());
                 book.setBookImage("alt.png");
             }
         }
@@ -92,15 +88,17 @@ public class BookController {
     @GetMapping("/edit/{id}")
     public String editForm(@PathVariable("id")Integer id,Model model) {
         Book b = BookRepository.findOne(id);
-        System.out.println(b);
+        System.out.println("------>ID=" + b.getBookID());
         model.addAttribute("book", b);
         return "edit";
     }
 
     @PostMapping("/edit")
-    public  @ResponseBody String editSubmit(@ModelAttribute Book book) {
+    public ModelAndView editSubmit(@ModelAttribute Book book) {
+        System.out.println("------>ID222 =" + book.getBookID());
+
         BookRepository.save(book);
-        return "edit";
+        return new ModelAndView("redirect:/book/all");
     }
 
     @GetMapping("/delete/{id}")

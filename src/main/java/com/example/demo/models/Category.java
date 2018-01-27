@@ -8,7 +8,12 @@ import java.util.List;
 public class Category {
 
     //Attributs
+
     @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    private Integer categoryID;
+
+
     @NotNull
     private String categoryName;
 
@@ -16,6 +21,15 @@ public class Category {
     private List<Book> categoryBooks;
 
     //Getters et setters
+
+
+    public Integer getCategoryID() {
+        return categoryID;
+    }
+
+    public void setCategoryID(Integer categoryID) {
+        this.categoryID = categoryID;
+    }
 
     public String getCategoryName() {
         return categoryName;

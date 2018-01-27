@@ -28,7 +28,7 @@ public class Book {
 
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "book_category", joinColumns = @JoinColumn(name = "bookID"), inverseJoinColumns = @JoinColumn(name = "categoryName"))
+    @JoinTable(name = "book_category", joinColumns = @JoinColumn(name = "bookID"), inverseJoinColumns = @JoinColumn(name = "categoryID"))
     private List<Category> bookCategories;
 
     //Getters et setters
