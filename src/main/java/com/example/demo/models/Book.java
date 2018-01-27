@@ -2,6 +2,7 @@ package com.example.demo.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
@@ -14,14 +15,19 @@ public class Book {
     private Integer bookID;
 
     @NotNull
+    @Size(min = 2, max = 40)
     private String bookTitle;
 
+    @NotNull
+    @Size(min = 4, max = 200)
     private String bookDescription;
 
-    @NotNull
-    private String bookAuthor;
 
     @NotNull
+    @Size(min = 2, max = 40)
+    private String bookAuthor;
+
+
     private String bookPath;
 
     private String bookImage;
