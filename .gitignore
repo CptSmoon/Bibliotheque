@@ -23,5 +23,6 @@ dist/
 nbdist/
 .nb-gradle/
 
-srv/main/java/resources/static
+srv/main/java/resources/static/img
+srv/main/java/resources/static/path
 srv/main/java/resources/application.properties

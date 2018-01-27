@@ -2,6 +2,7 @@ package com.example.demo.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
@@ -15,6 +16,7 @@ public class Category {
 
 
     @NotNull
+    @Size(min = 2, max = 40)
     private String categoryName;
 
     @ManyToMany(mappedBy = "bookCategories")

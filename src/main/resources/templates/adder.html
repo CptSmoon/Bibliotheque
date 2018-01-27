@@ -11,22 +11,31 @@
         <tr>
             <td><label for="title" >Book Title </label></td>
             <td><input id="title" type="text" th:field="*{bookTitle}"/></td>
+            <td th:if="${#fields.hasErrors('bookTitle')}" th:errors="*{bookTitle}"></td>
+
         </tr>
         <tr>
             <td><label for="description">Book Description </label></td>
             <td><textarea id="description" th:field="*{bookDescription}"/></td>
+            <td th:if="${#fields.hasErrors('bookDescription')}" th:errors="*{bookDescription}"></td>
+
         </tr>
         <tr>
             <td><label for="author">Book Author </label></td>
             <td><input id="author" th:field="*{bookAuthor}"/></td>
+            <td th:if="${#fields.hasErrors('bookAuthor')}" th:errors="*{bookAuthor}"></td>
         </tr>
         <tr>
             <td><label path="file">Book path:</label></td>
             <td><input type="file" name="file" /></td>
+            <td th:if="${#fields.hasErrors('bookPath')}" th:errors="*{bookPath}"></td>
+
         </tr>
         <tr>
             <td><label path="file">Book image:</label></td>
             <td><input type="file" name="image" /></td>
+            <td th:if="${#fields.hasErrors('bookImage')}" th:errors="*{bookImage}"></td>
+
         </tr>
         <tr>
             <td><input type="submit" value="Submit"/><input type="reset" value="Reset" /></td>
