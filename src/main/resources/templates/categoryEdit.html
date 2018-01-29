@@ -1,0 +1,24 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>heeeee</title>
+</head>
+<body>
+<h1>Add a Book Category</h1>
+
+<form method="POST" action="#"  th:action="@{/category/edit}" th:object="${cat}" enctype="multipart/form-data" >
+    <table>
+        <tr>
+            <td><input id="id" type="hidden" th:field="*{categoryID}"/></td>
+        </tr>
+        <tr>
+            <td><label for="name" >Category name: </label></td>
+            <td><input id="name" type="text" th:field="*{categoryName}"/></td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Submit"/><input type="reset" value="Reset" /></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

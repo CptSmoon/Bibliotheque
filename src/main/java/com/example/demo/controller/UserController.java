@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 
+import com.example.demo.models.Book;
 import com.example.demo.models.User;
 import com.example.demo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,10 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -60,6 +58,19 @@ public class UserController {
     public String getAllBooks(Model model) {
         model.addAttribute("users", userRepository.findAll());
         return "userLister";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String editForm(@PathVariable("id") Integer id, Model model) {
+        User u = userRepository.findOne(id);
+        model.addAttribute("user", u);
+        return "userEdit";
+    }
+
+    @PostMapping("/edit")
+    public ModelAndView editSubmit(@ModelAttribute User user) {
+        userRepository.save(user);
+        return new ModelAndView("redirect:/user/all");
     }
 
 }
