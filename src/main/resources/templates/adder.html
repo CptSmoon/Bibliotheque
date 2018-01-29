@@ -25,11 +25,15 @@
             <td><input id="author" th:field="*{bookAuthor}"/></td>
             <td th:if="${#fields.hasErrors('bookAuthor')}" th:errors="*{bookAuthor}"></td>
         </tr>
+        <!--<tr>-->
+            <!--<td><label for="cat">Book Categories</label></td>-->
+            <!--<td th:each="cat : ${categories}">-->
+                <!--<input id="cat" type="checkbox" th:field="*{bookCategories}" th:value="${cat}"/></td>-->
+        <!--</tr>-->
         <tr>
             <td><label path="file">Book path:</label></td>
             <td><input type="file" name="file" /></td>
             <td th:if="${#fields.hasErrors('bookPath')}" th:errors="*{bookPath}"></td>
-
         </tr>
         <tr>
             <td><label path="file">Book image:</label></td>

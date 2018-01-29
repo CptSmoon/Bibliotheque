@@ -97,10 +97,13 @@ public class Book {
 
     //Mes fonctions
 
-    public void displayBookCategories(){
+    public String displayBookCategories(){
         int i;
-        for (i=0; i<bookCategories.size();i++){
-            System.out.println(bookCategories.get(i));
+        String s;
+        s= bookCategories.get(0).getCategoryName();
+        for (i=1; i<bookCategories.size();i++){
+            s+=(","+bookCategories.get(i).getCategoryName());
         }
+        return (s);
     }
 }

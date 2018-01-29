@@ -59,4 +59,10 @@ public class CategoryController {
         categoryRepository.save(cat);
         return new ModelAndView("redirect:/category/all");
     }
+
+    @GetMapping("/delete/{id}")
+    public String deleteCategory(@PathVariable("id") Integer id, Model model) {
+        categoryRepository.delete(id);
+        return "categoryLister";
+    }
 }
