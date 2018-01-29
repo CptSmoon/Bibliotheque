@@ -1,10 +1,20 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Liste des livres</title>
+    <title>Category List</title>
+    <link href="../static/bootstrap-3.3.7/css/bootstrap.css"
+          th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>
+    <link th:href="@{/css/datatables.css}" rel="stylesheet" media="screen"/>
+    <link th:href="@{/css/index.css}" rel="stylesheet" media="screen"/>
+    <script type="text/javascript" th:src="@{/jquery/jquery-3.3.1.js}"></script>
+    <script type="text/javascript" th:src="@{/bootstrap-3.3.7/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/datatables.js}"></script>
+
+
 </head>
 <body>
-<table border="1">
+<div th:replace="fragments/header :: header"></div>
+<table class="table table-hover align-middle " id="categoriesTable" border="1">
     <tr>
         <th>Category name:</th>
     </tr>
@@ -14,8 +24,11 @@
         </tr>
     </th:block>
 </table>
-<a href="/category/add">Add another category</a>
-
+<script>
+    $(document).ready( function () {
+        $('#categoriesTable').DataTable();
+    } );
+</script>
 </body>
 
 </html>

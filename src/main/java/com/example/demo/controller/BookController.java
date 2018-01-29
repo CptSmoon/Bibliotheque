@@ -45,7 +45,7 @@ public class BookController {
     private static String IMAGE_UPLOAD_FOLDER = "src/main/resources/static/img/";
     private static String PATH_UPLOAD_FOLDER = "src/main/resources/static/path/";
     private static long MAX_FILE_SIZE = 10000000;
-    private static long MAX_IMAGE_SIZE = 20000;
+    private static long MAX_IMAGE_SIZE = 20000000;
 
     BookController(){        patternBook = Pattern.compile(BOOK_PATTERN);
         patternImage = Pattern.compile(IMAGE_PATTERN);}
@@ -146,8 +146,7 @@ public class BookController {
     }
 
     @PostMapping("/edit")
-    public @ResponseBody
-    String editSubmit(@ModelAttribute Book book) {
+    public @ResponseBody String editSubmit(@ModelAttribute Book book) {
         BookRepository.save(book);
         return "edit";
     }

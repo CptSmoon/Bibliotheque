@@ -1,9 +1,17 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>heeeee</title>
+    <title>Add a Category</title>
+    <link href="../static/bootstrap-3.3.7/css/bootstrap.css"
+          th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>
+    <script type="text/javascript" th:src="@{/jquery/jquery-3.3.1.js}"></script>
+    <script type="text/javascript" th:src="@{/bootstrap-3.3.7/js/bootstrap.min.js}"></script>
+
+    <link th:href="@{/css/index.css}" rel="stylesheet" media="screen"/>
+
 </head>
 <body>
+<div th:replace="fragments/header :: header"></div>
 <h1>Add a Book Category</h1>
 
 <form method="POST" action="#"  th:action="@{/category/add}" th:object="${cat}" enctype="multipart/form-data" >

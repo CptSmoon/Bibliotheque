@@ -1,31 +1,53 @@
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+>
 
 <head>
-    <title>Liste des livres</title>
+    <title>Books List</title>
+    <link th:href="@{/css/index.css}" rel="stylesheet" media="screen"/>
+    <link href="../static/bootstrap-3.3.7/css/bootstrap.css"
+          th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>
+    <link th:href="@{/css/datatables.css}" rel="stylesheet" media="screen"/>
+    <script type="text/javascript" th:src="@{/jquery/jquery-3.3.1.js}"></script>
+    <script type="text/javascript" th:src="@{/bootstrap-3.3.7/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/datatables.js}"></script>
+
+
+
 </head>
 <body>
-<table border="1">
-    <tr>
-        <th>Book ID</th>
-        <th>Book title</th>
-        <th>Book Author</th>
-        <th>Book Description</th>
-        <th>Book Path</th>
-        <th>Book Image</th>
-    </tr>
-    <th:block th:each="book : ${books}">
+<div th:replace="fragments/header :: header"></div>
+<div class="container">
+    <table class="table stripe row-border table-hover align-middle "
+           id="booksTable" border="1">
+        <thead>
         <tr>
-            <td th:text="${book.bookID}"></td>
-            <td th:text="${book.bookTitle}"></td>
-            <td th:text="${book.bookAuthor}"> </td>
-            <td th:text="${book.bookDescription}"> </td>
-            <td th:text="${book.bookPath}"></td>
-            <td th:text="${book.bookImage}"></td>
-
+            <th>Book ID</th>
+            <th>Book title</th>
+            <th>Book Author</th>
+            <th>Book Description</th>
+            <th>Book Path</th>
+            <th>Book Image</th>
         </tr>
-    </th:block>
-</table>
-<a href="/book/add">Add another book</a>
+        </thead>
+        <tbody>
+        <th:block th:each="book : ${books}">
+            <tr>
+                <td th:text="${book.bookID}"></td>
+                <td th:text="${book.bookTitle}"></td>
+                <td th:text="${book.bookAuthor}"></td>
+                <td th:text="${book.bookDescription}"></td>
+                <td th:text="${book.bookPath}"></td>
+                <td th:text="${book.bookImage}"></td>
+            </tr>
+        </th:block>
+        </tbody>
+    </table>
+</div>
+<script>
+    $(document).ready( function () {
+        $('#booksTable').DataTable();
+    } );
+</script>
 
 </body>
 

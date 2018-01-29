@@ -1,0 +1,48 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Online Library</title>
+    <link href="../static/css/index.css" th:href="@{css/index.css}" rel="stylesheet" media="screen"/>
+
+    <link href="../static/bootstrap-3.3.7/css/bootstrap.css"
+          th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>
+    <script type="text/javascript" th:src="@{/jquery/jquery-3.3.1.js}"></script>
+
+    <script type="text/javascript" th:src="@{/bootstrap-3.3.7/js/bootstrap.min.js}"></script>
+
+    <link th:href="@{/css/login.css}" rel="stylesheet" media="screen"/>
+
+    <!--<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>-->
+    <!--<script src="../static/js/datatable.js"></script>-->
+    <!--<div th:replace="fragments/header :: header-css"/>-->
+</head>
+<body>
+<!--<div th:replace="fragments/header :: header"/>-->
+
+
+<div th:replace="fragments/header :: header">
+</div>
+
+<div class="container">
+    <p>Helooooooooooooooooo</p>
+    <button class="btn  btn-success" >Hello</button>
+</div>
+
+<div class="container">
+    <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Sign Out"/>
+    </form>
+</div>
+
+
+<script>
+    if(typeof jQuery == 'undefined'){
+        console.log("Jquery not imported");
+    }
+    else{
+        console.log("imported");
+    }
+</script>
+
+</body>
+</html>

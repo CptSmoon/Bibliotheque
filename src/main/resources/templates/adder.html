@@ -1,46 +1,90 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>heeeee</title>
+    <title>Add a Book</title>
+    <link href="../static/bootstrap-3.3.7/css/bootstrap.css"
+          th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>
+    <script type="text/javascript" th:src="@{/jquery/jquery-3.3.1.js}"></script>
+    <script type="text/javascript" th:src="@{/bootstrap-3.3.7/js/bootstrap.min.js}"></script>
+
+    <link th:href="@{/css/index.css}" rel="stylesheet" media="screen"/>
+
 </head>
 <body>
-<h1>Add a Book</h1>
+<div class="container">
 
-<form method="POST" action="#"  th:action="@{/book/add}" th:object="${book}" enctype="multipart/form-data" >
-    <table>
-        <tr>
-            <td><label for="title" >Book Title </label></td>
-            <td><input id="title" type="text" th:field="*{bookTitle}"/></td>
-            <td th:if="${#fields.hasErrors('bookTitle')}" th:errors="*{bookTitle}"></td>
+    <div th:replace="fragments/header :: header"></div>
 
-        </tr>
-        <tr>
-            <td><label for="description">Book Description </label></td>
-            <td><textarea id="description" th:field="*{bookDescription}"/></td>
-            <td th:if="${#fields.hasErrors('bookDescription')}" th:errors="*{bookDescription}"></td>
+    <h1>Add a Book</h1></div>
+<div class="container col-8">
 
-        </tr>
-        <tr>
-            <td><label for="author">Book Author </label></td>
-            <td><input id="author" th:field="*{bookAuthor}"/></td>
-            <td th:if="${#fields.hasErrors('bookAuthor')}" th:errors="*{bookAuthor}"></td>
-        </tr>
-        <tr>
-            <td><label path="file">Book path:</label></td>
-            <td><input type="file" name="file" /></td>
-            <td th:if="${#fields.hasErrors('bookPath')}" th:errors="*{bookPath}"></td>
+    <div class="row">
+        <form class="form-horizontal"
+              method="POST" action="#" th:action="@{/book/add}"
+              th:object="${book}"
+              enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="title">Book Title </label>
+                <input class="form-control" placeholder="Book title"
+                       id="title" type="text" th:field="*{bookTitle}"/>
+                <small th:if="${#fields.hasErrors('bookTitle')}" th:errors="*{bookTitle}"></small>
+            </div>
 
-        </tr>
-        <tr>
-            <td><label path="file">Book image:</label></td>
-            <td><input type="file" name="image" /></td>
-            <td th:if="${#fields.hasErrors('bookImage')}" th:errors="*{bookImage}"></td>
+            <div class="form-group">
+            <label for="description">Book Description </label>
+                <textarea class="form-control" placeholder="Description" id="description" th:field="*{bookDescription}"></textarea>
+            <small th:if="${#fields.hasErrors('bookDescription')}" th:errors="*{bookDescription}"></small>
+            </div>
 
-        </tr>
-        <tr>
-            <td><input type="submit" value="Submit"/><input type="reset" value="Reset" /></td>
-        </tr>
-    </table>
-</form>
+            <div class="form-group">
+                <label for="author">Book Author </label>
+                <input id="author" placeholder="Author Name" class="form-control" th:field="*{bookAuthor}"/>
+                <small th:if="${#fields.hasErrors('bookAuthor')}" th:errors="*{bookAuthor}"></small>
+            </div>
+
+        </form>
+    </div>
+    <div class="col">
+        <form class="form-horizontal"
+              method="POST" action="#" th:action="@{/book/add}" th:object="${book}" enctype="multipart/form-data">
+
+
+            <table>
+                <tr>
+                    <td><label for="title2">Book Title </label></td>
+                    <td><input id="title2" type="text" th:field="*{bookTitle}"/></td>
+                    <td th:if="${#fields.hasErrors('bookTitle')}" th:errors="*{bookTitle}"></td>
+
+                </tr>
+                <tr>
+                    <td><label for="description2">Book Description </label></td>
+                    <td><textarea id="description2" th:field="*{bookDescription}"/></td>
+                    <td th:if="${#fields.hasErrors('bookDescription')}" th:errors="*{bookDescription}"></td>
+
+                </tr>
+                <tr>
+                    <td><label for="author2">Book Author </label></td>
+                    <td><input id="author2" th:field="*{bookAuthor}"/></td>
+                    <td th:if="${#fields.hasErrors('bookAuthor')}" th:errors="*{bookAuthor}"></td>
+                </tr>
+                <tr>
+                    <td><label path="file">Book path:</label></td>
+                    <td><input type="file" name="file"/></td>
+                    <td th:if="${#fields.hasErrors('bookPath')}" th:errors="*{bookPath}"></td>
+
+                </tr>
+                <tr>
+                    <td><label path="file">Book image:</label></td>
+                    <td><input type="file" name="image"/></td>
+                    <td th:if="${#fields.hasErrors('bookImage')}" th:errors="*{bookImage}"></td>
+
+                </tr>
+                <tr>
+                    <td><input type="submit" value="Submit"/><input type="reset" value="Reset"/></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
 </body>
 </html>

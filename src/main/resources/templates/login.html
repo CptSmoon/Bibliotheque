@@ -1,0 +1,54 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Login</title>
+    <link href="../static/css/index.css" th:href="@{css/index.css}" rel="stylesheet" media="screen"/>
+
+    <link href="../static/bootstrap-3.3.7/css/bootstrap.css"
+          th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>
+    <script type="text/javascript" th:src="@{/jquery/jquery-3.3.1.js}"></script>
+
+    <script type="text/javascript" th:src="@{/bootstrap-3.3.7/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/login.js}"></script>
+
+    <link th:href="@{/css/login.css}" rel="stylesheet" media="screen"/>
+
+</head>
+<body>
+
+
+<div th:replace="fragments/header :: header">
+
+</div>
+
+<div class="container ">
+    <div class=" card card-container">
+        <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
+        <p id="profile-name" class="profile-name-card"></p>
+        <form action="login" class="form-signin">
+            <span id="reauth-email" class="reauth-email"></span>
+            <input type="text" id="inputLogin" class="form-control" placeholder="Login" required="required" autofocus="autofocus"/>
+            <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="required"/>
+            <div id="remember" class="checkbox">
+                <label>
+                    <input type="checkbox" value="remember-me"> Remember me</input >
+                </label>
+            </div>
+            <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in</button>
+        </form>
+        <a href="#" class="forgot-password">
+            Forgot the password?
+        </a>
+    </div>
+</div>
+<script>
+    if(typeof jQuery == 'undefined'){
+        console.log("Jquery not imported");
+    }
+    else{
+        console.log("imported");
+    }
+</script>
+
+</body>
+</html>

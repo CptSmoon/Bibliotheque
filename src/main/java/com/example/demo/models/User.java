@@ -6,6 +6,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.List;
 
 
 //implementing Serializable to be able to make it a 3 ID bean
@@ -34,6 +36,15 @@ public class User {
     @NotNull
     @Size(min = 8, max = 30)
     private String userPassword;
+
+    @ManyToMany
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(
+                    name = "user_id", referencedColumnName = "userID"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "role_id", referencedColumnName = "id"))
+    private Collection<Role> roles;
 
 
     public Integer getUserID() {
@@ -85,4 +96,11 @@ public class User {
     }
 
 
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
+    public Collection<Role> getRoles() {
+        return roles;
+    }
 }
