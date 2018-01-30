@@ -1,14 +1,17 @@
 package com.example.demo.models;
 
+import com.example.demo.repositories.BookRepository;
+import com.example.demo.repositories.CategoryRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
+import java.util.Vector;
 
 @Entity
 public class Book {
-
-    //Attributs
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -34,7 +37,8 @@ public class Book {
 
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "book_category", joinColumns = @JoinColumn(name = "bookID"), inverseJoinColumns = @JoinColumn(name = "categoryID"))
+    @JoinTable(name = "book_category", joinColumns = @JoinColumn(name = "bookID"),
+            inverseJoinColumns = @JoinColumn(name = "categoryID"))
     private List<Category> bookCategories;
 
     //Getters et setters
@@ -106,4 +110,14 @@ public class Book {
         }
         return (s);
     }
+
+    public Book(FormBook f,List<Category> c){
+        setBookImage(f.getBookImage());
+        setBookPath(f.getBookPath());
+        setBookAuthor(f.getBookAuthor());
+        setBookDescription(f.getBookDescription());
+        setBookTitle(f.getBookTitle());
+        setBookCategories(c);
+    }
+    public Book(){}
 }

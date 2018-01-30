@@ -36,7 +36,6 @@ public class CategoryController {
         if (categoryRepository.findAllByCategoryName(cat.getCategoryName()).size()==0){
             categoryRepository.save(cat);
         }
-        System.out.println("add setter reached");
         return new ModelAndView("redirect:/category/all");
     }
 

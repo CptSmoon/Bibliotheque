@@ -12,18 +12,23 @@
 </head>
 <body>
 <div th:replace="fragments/header :: header"></div>
+<div class="container col-8">
 <h1>Add a Book Category</h1>
+<form method="POST" action="#"  th:action="@{/category/add}"
+      th:object="${cat}" enctype="multipart/form-data" >
 
-<form method="POST" action="#"  th:action="@{/category/add}" th:object="${cat}" enctype="multipart/form-data" >
-    <table>
-        <tr>
-            <td><label for="name" >Category name: </label></td>
-            <td><input id="name" type="text" th:field="*{categoryName}"/></td>
-        </tr>
-        <tr>
-            <td><input type="submit" value="Submit"/><input type="reset" value="Reset" /></td>
-        </tr>
-    </table>
+    <div class="form-group">
+        <label for="categoryName" >Category name: </label>
+        <input class="form-control" id="categoryName" type="text" required="required" name ="categoryName" th:field="*{categoryName}"/>
+        <small th:if="${#fields.hasErrors('categoryName')}" th:errors="*{categoryName}"></small>
+    </div>
+
+    <div class="form-group">
+        <input class="btn btn-success form-control" type="submit" value="Submit"/>
+        <input class="btn btn-warning form-control" type="reset" value="Reset" />
+    </div>
+
 </form>
+</div>
 </body>
 </html>

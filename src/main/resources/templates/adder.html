@@ -4,28 +4,34 @@
     <title>Add a Book</title>
     <link href="../static/bootstrap-3.3.7/css/bootstrap.css"
           th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>
+    <link th:href="@{/css/file.css}" rel="stylesheet" media="screen"/>
+    <link th:href="@{/css/imageUpload.css}" rel="stylesheet" media="screen"/>
+    <link th:href="@{/css/select2.min.css}" rel="stylesheet" media="screen"/>
+
     <script type="text/javascript" th:src="@{/jquery/jquery-3.3.1.js}"></script>
     <script type="text/javascript" th:src="@{/bootstrap-3.3.7/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/file.js}"></script>
+    <script type="text/javascript" th:src="@{/js/imageUpload.js}"></script>
+    <script type="text/javascript" th:src="@{/js/select2.js}"></script>
 
     <link th:href="@{/css/index.css}" rel="stylesheet" media="screen"/>
 
 </head>
 <body>
-<div class="container">
 
     <div th:replace="fragments/header :: header"></div>
 
-    <h1>Add a Book</h1></div>
 <div class="container col-8">
+    <div class="row"><h1>Add a Book</h1></div>
 
     <div class="row">
         <form class="form-horizontal"
               method="POST" action="#" th:action="@{/book/add}"
-              th:object="${book}"
+              th:object="${bookForm}"
               enctype="multipart/form-data">
             <div class="form-group">
                 <label for="title">Book Title </label>
-                <input class="form-control" placeholder="Book title"
+                <input required="required" class="form-control" placeholder="Book title"
                        id="title" type="text" th:field="*{bookTitle}"/>
                 <small th:if="${#fields.hasErrors('bookTitle')}" th:errors="*{bookTitle}"></small>
             </div>
@@ -38,54 +44,58 @@
 
             <div class="form-group">
                 <label for="author">Book Author </label>
-                <input id="author" placeholder="Author Name" class="form-control" th:field="*{bookAuthor}"/>
+                <input required="required" id="author" placeholder="Author Name" class="form-control" th:field="*{bookAuthor}"/>
                 <small th:if="${#fields.hasErrors('bookAuthor')}" th:errors="*{bookAuthor}"></small>
+            </div>
+
+            <div class="form-group">
+                <label for="file">Book Categories:</label>
+                <select th:field="*{categoriesIDs}" th:placeholder="Category"
+                        class="form-control  js-example-basic-multiple"
+                        name="categoryIDs[]" multiple="multiple"
+                        required="required">
+                        <option th:each="cat : ${categories}"
+                                 th:text="${cat.categoryName}"
+                                th:value="${cat.categoryID}"></option>
+                </select>
+                <!--<small th:if="${#fields.hasErrors('categories[]')}" th:errors="*{bookPath}"></small>-->
+            </div>
+
+            <div class="form-group">
+                <label for="file">Book file:</label>
+                <input required="required" id="file" type="file" name="file"/>
+                <small th:if="${#fields.hasErrors('bookPath')}" th:errors="*{bookPath}"></small>
+            </div>
+
+            <div class="form-group">
+                <label>Upload Book Image</label>
+                <div class="input-group">
+            <span class="input-group-btn">
+                <span class="btn btn-default btn-file">
+                    Browse… <input type="file" name="image" id="imgInp"></input>
+                </span>
+            </span>
+                    <input required="required" type="text" class="form-control" readonly="readonly">
+                </input>
+                </div>
+                <img id='img-upload'/>
+            <small th:if="${#fields.hasErrors('bookImage')}" th:errors="*{bookImage}"></small>
+            </div>
+
+            <div class="form-group">
+                <input class="form-control btn btn-primary" type="submit" value="Submit"/>
+                <input class="btn btn-warning form-control" type="reset" value="Reset"/>
             </div>
 
         </form>
     </div>
-    <div class="col">
-        <form class="form-horizontal"
-              method="POST" action="#" th:action="@{/book/add}" th:object="${book}" enctype="multipart/form-data">
 
 
-            <table>
-                <tr>
-                    <td><label for="title2">Book Title </label></td>
-                    <td><input id="title2" type="text" th:field="*{bookTitle}"/></td>
-                    <td th:if="${#fields.hasErrors('bookTitle')}" th:errors="*{bookTitle}"></td>
-
-                </tr>
-                <tr>
-                    <td><label for="description2">Book Description </label></td>
-                    <td><textarea id="description2" th:field="*{bookDescription}"/></td>
-                    <td th:if="${#fields.hasErrors('bookDescription')}" th:errors="*{bookDescription}"></td>
-
-                </tr>
-                <tr>
-                    <td><label for="author2">Book Author </label></td>
-                    <td><input id="author2" th:field="*{bookAuthor}"/></td>
-                    <td th:if="${#fields.hasErrors('bookAuthor')}" th:errors="*{bookAuthor}"></td>
-                </tr>
-                <tr>
-                    <td><label path="file">Book path:</label></td>
-                    <td><input type="file" name="file"/></td>
-                    <td th:if="${#fields.hasErrors('bookPath')}" th:errors="*{bookPath}"></td>
-
-                </tr>
-                <tr>
-                    <td><label path="file">Book image:</label></td>
-                    <td><input type="file" name="image"/></td>
-                    <td th:if="${#fields.hasErrors('bookImage')}" th:errors="*{bookImage}"></td>
-
-                </tr>
-                <tr>
-                    <td><input type="submit" value="Submit"/><input type="reset" value="Reset"/></td>
-                </tr>
-            </table>
-        </form>
-    </div>
 </div>
-
+<script>
+    $(document).ready(function() {
+        $('.js-example-basic-multiple').select2();
+    });
+</script>
 </body>
 </html>

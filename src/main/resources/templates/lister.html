@@ -25,6 +25,7 @@
             <th>Book title</th>
             <th>Book Author</th>
             <th>Book Description</th>
+            <th>Book Categories</th>
             <th>Book Path</th>
             <th>Book Image</th>
 
@@ -37,6 +38,7 @@
                 <td th:text="${book.bookTitle}"></td>
                 <td th:text="${book.bookAuthor}"></td>
                 <td th:text="${book.bookDescription}"></td>
+                <td th:text="${book.displayBookCategories()}"></td>
                 <td th:text="${book.bookPath}"></td>
                 <td th:text="${book.bookImage}"></td>
             </tr>

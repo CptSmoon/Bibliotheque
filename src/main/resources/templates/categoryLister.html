@@ -14,16 +14,25 @@
 </head>
 <body>
 <div th:replace="fragments/header :: header"></div>
-<table class="table table-hover align-middle " id="categoriesTable" border="1">
-    <tr>
+<div class="container col-8">
+<h1>List of categories</h1>
+<table class="table stripe row-border table-hover align-middle " id="categoriesTable" border="1">
+    <thead>
+
+        <th>Category ID:</th>
         <th>Category name:</th>
-    </tr>
+    </thead>
+    <tbody>
     <th:block th:each="cat : ${categories}">
         <tr>
+            <td th:text="${cat.categoryID}"></td>
+
             <td th:text="${cat.categoryName}"></td>
         </tr>
     </th:block>
+    </tbody>
 </table>
+</div>
 <script>
     $(document).ready( function () {
         $('#categoriesTable').DataTable();

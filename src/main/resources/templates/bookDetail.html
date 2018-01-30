@@ -1,0 +1,66 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Online Library</title>
+    <link href="../static/css/index.css" th:href="@{css/index.css}" rel="stylesheet" media="screen"/>
+
+    <link href="../static/bootstrap-3.3.7/css/bootstrap.css"
+          th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>
+    <link th:href="@{/css/login.css}" rel="stylesheet" media="screen"/>
+    <link th:href="@{/css/bookdetails.css}" rel="stylesheet" media="screen"/>
+
+    <script type="text/javascript" th:src="@{/jquery/jquery-3.3.1.js}"></script>
+    <script type="text/javascript" th:src="@{/js/viewer.js}"></script>
+
+    <script type="text/javascript" th:src="@{/bootstrap-3.3.7/js/bootstrap.min.js}"></script>
+
+
+</head>
+<body>
+<!--<div th:replace="fragments/header :: header"/>-->
+
+
+<div th:replace="fragments/header :: header">
+</div>
+
+
+<div class="container col-8">
+    <h1>Book Details</h1>
+    <div class="card">
+        <div class="container-fliud">
+            <div class="wrapper row">
+                <div class="preview col-md-6">
+
+                    <div class="preview-pic tab-content">
+                        <div class="tab-pane active" id="pic-1"><img width="50%"
+                                                                     th:src="@{|/img/${book.getBookImage()}|}"/></div>
+                    </div>
+
+                </div>
+                <div class="details col-md-6">
+                    <h3 class="product-title" th:text="${book.bookTitle}">Title here</h3>
+                    <h4>Description:</h4>
+                    <p class="product-description" th:text="${book.bookDescription}"></p>
+                    <h4 class="price">Author: <span th:text="${book.bookAuthor}">></span></h4>
+                    <h5 class="sizes">Categories :
+                        <span th:text="${book.displayBookCategories()}" class="size" title="small"></span>
+                    </h5>
+
+                    <div class="action">
+                        <button class="add-to-cart btn btn-default" type="button">Read</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    if (typeof jQuery == 'undefined') {
+        console.log("Jquery not imported");
+    }
+    else {
+        console.log("imported");
+    }
+</script>
+
+</body>
+</html>

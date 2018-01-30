@@ -27,7 +27,6 @@ public class UserController {
 
     @GetMapping("/add")
     public String addForm(Model model) {
-        System.out.println("add getter reached");
         model.addAttribute("user", new User());
         return "userAdder";
     }

@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
 import com.example.demo.models.Book;
+import com.example.demo.models.Category;
+import com.example.demo.models.FormBook;
 import com.example.demo.repositories.BookRepository;
 import com.example.demo.repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
+import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -53,19 +57,35 @@ public class BookController {
 
     @GetMapping("/add")
     public String addForm(ModelMap model) {
-        model.addAttribute("book", new Book());
+        model.addAttribute("bookForm", new FormBook());
         model.addAttribute("categories", categoryRepository.findAll());
+        Vector <Integer> V = new Vector<Integer>();
+        V.add(1);
+        V.add(12);
+        V.add(13);
+        model.addAttribute("categoryIDs",V);
         return "adder";
     }
 
     @PostMapping("/add")
-    public ModelAndView addSubmit(@Valid @ModelAttribute Book book, BindingResult bindingResult, @RequestParam("image") MultipartFile image, @RequestParam("file") MultipartFile file, ModelMap model) {
+    public ModelAndView addSubmit(
+            @Valid @ModelAttribute FormBook bookForm,
+            BindingResult bindingResult,
+            @RequestParam("image") MultipartFile image,
+            @RequestParam("file") MultipartFile file, ModelMap model) {
 
+
+        List<Category> categories = new Vector<Category>();
+        for(Integer i : bookForm.getCategoriesIDs()){
+            Category c = categoryRepository.findByCategoryID(i);
+            categories.add(c);
+        }
+        Book book = new Book(bookForm,categories);
         if (!file.isEmpty()) {
             try{
                 matcherBook = patternBook.matcher(file.getOriginalFilename());
                 if (!matcherBook.matches()) {
-                    bindingResult.rejectValue("bookPath", "fichier.errone", "Format du fichier pdf érroné");
+                    bindingResult.rejectValue("bookPath", "fichier.errone", "Wrong file format");
                 }
                 else if(file.getSize()>MAX_FILE_SIZE){
                     bindingResult.rejectValue("bookPath", "fichier.taille", "File limit exceeded MAX : "+MAX_FILE_SIZE);
@@ -91,7 +111,7 @@ public class BookController {
             }
         }
         else {
-            bindingResult.rejectValue("bookPath", "fichier.inexistant", "Il faut choisir un fichier pdf");
+            bindingResult.rejectValue("bookPath", "fichier.inexistant", "Choose a pdf file please");
         }
 
         if (!image.isEmpty()) {
@@ -99,7 +119,7 @@ public class BookController {
             try{
                 matcherImage = patternImage.matcher(image.getOriginalFilename());
                 if (!matcherImage.matches()) {
-                    bindingResult.rejectValue("bookImage", "image.erronee", "Format du fichier érroné");
+                    bindingResult.rejectValue("bookImage", "image.erronee", "Wrong image format");
                 }
                 else if(file.getSize()>MAX_IMAGE_SIZE){
                     bindingResult.rejectValue("bookImage", "image.taille", "Image limit exceeded MAX : "+MAX_IMAGE_SIZE);
@@ -119,13 +139,14 @@ public class BookController {
                 book.setBookImage("alt.png");
             }
         } else {
-            bindingResult.rejectValue("bookImage", "image.inexistante", "Il faut choisir une image");
+            bindingResult.rejectValue("bookImage", "image.inexistante", "Choose an imange please");
 
         }
         if (bindingResult.hasErrors()) {
+            model.addAttribute("categories", categoryRepository.findAll());
+
             return new ModelAndView("adder");
         }
-
         BookRepository.save(book);
         return new ModelAndView("redirect:/book/all");
     }
@@ -141,6 +162,13 @@ public class BookController {
         Book b = BookRepository.findOne(id);
         model.addAttribute("book", b);
         return "edit";
+    }
+
+    @GetMapping("/details/{id}")
+    public String detailsBook(@PathVariable("id") Integer id, Model model) {
+        Book b = BookRepository.findOne(id);
+        model.addAttribute("book", b);
+        return "bookDetail";
     }
 
     @PostMapping("/edit")

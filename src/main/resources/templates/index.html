@@ -5,11 +5,14 @@
 
     <link href="../static/bootstrap-3.3.7/css/bootstrap.css"
           th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>
+    <link th:href="@{/css/login.css}" rel="stylesheet" media="screen"/>
+    <link th:href="@{/css/viewer.css}" rel="stylesheet" media="screen"/>
+
     <script type="text/javascript" th:src="@{/jquery/jquery-3.3.1.js}"></script>
+    <script type="text/javascript" th:src="@{/js/viewer.js}"></script>
 
     <script type="text/javascript" th:src="@{/bootstrap-3.3.7/js/bootstrap.min.js}"></script>
 
-    <link th:href="@{/css/login.css}" rel="stylesheet" media="screen"/>
 
     <!--<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>-->
     <!--<script src="../static/js/datatable.js"></script>-->
@@ -22,18 +25,41 @@
 <div th:replace="fragments/header :: header">
 </div>
 
-<div class="container">
-    <p>Helooooooooooooooooo</p>
-    <button class="btn  btn-success" >Hello</button>
-</div>
+<div class="container col-8">
+<h1>Read a book</h1>
+<div class="row">
+    <div th:each="book : ${books}" class="col-sm-3">
+        <article class="col-item">
+            <div class="photo">
+                <div class="options">
 
-<div class="container">
-    <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
-    <form th:action="@{/logout}" method="post">
-        <input type="submit" value="Sign Out"/>
-    </form>
-</div>
 
+                    <a th:href="@{|/book/details/${book.bookID}|}"
+                            class="btn btn-default" type="submit" data-toggle="tooltip" data-placement="top" title="Details">
+                        <i class="fa fa-info"></i>
+                    </a>
+                    <a th:href="@{|/book/read/${book.bookID}|}"
+                            class="btn btn-default" type="submit" data-toggle="tooltip" data-placement="top" title="Read">
+                        <i class="fa fa-book"></i>
+                    </a>
+                </div>
+
+                <a href="#"> <img th:src="@{|/img/${book.getBookImage()}|}" class="img-responsive" alt="Product Image" /> </a>
+            </div>
+            <div class="info">
+                <div class="row">
+                    <div class="price-details col-md-6">
+                        <p th:text="${book.bookDescription}" class="details">
+                        </p>
+                        <h1 th:text="${book.bookDescription}">Book Title will be here </h1>
+                        <span th:text="${book.bookAuthor}" class="price-new">Book Author</span>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </div>
+</div>
+</div>
 
 <script>
     if(typeof jQuery == 'undefined'){

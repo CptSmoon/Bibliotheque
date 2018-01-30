@@ -1,6 +1,9 @@
 package com.example.demo.controller;
 
 import com.example.demo.models.User;
+import com.example.demo.repositories.BookRepository;
+import com.example.demo.repositories.CategoryRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,10 +16,15 @@ import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping(value={"/","/home","/welcome"})
-public class AuthController {
-
+public class PublicController {
+    @Autowired
+    BookRepository bookRepository;
+//    @GetMapping("/error")
+//    public String getError(ModelMap model){return "error";}
     @GetMapping("")
     public String getHome(ModelMap model){
+
+        model.addAttribute("books", bookRepository.findAll());
         return "index";
     }
 
