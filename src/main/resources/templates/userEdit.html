@@ -5,7 +5,7 @@
 </head>
 <body>
 <h1>Edit a User</h1>
-
+    <div class="container col-8">
 <form method="POST" action="#"  th:action="@{/user/edit}" th:object="${user}" >
     <table>
         <tr>
@@ -42,6 +42,6 @@
             <td><input type="submit" value="Submit"/><input type="reset" value="Reset" /></td>
         </tr>
     </table>
-</form>
+</form></div>
 </body>
 </html>

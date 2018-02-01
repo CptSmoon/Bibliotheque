@@ -18,16 +18,16 @@ public class Book {
     private Integer bookID;
 
     @NotNull
-    @Size(min = 2, max = 40)
+    @Size(min = 2, max = 100)
     private String bookTitle;
 
     @NotNull
-    @Size(min = 4, max = 200)
+    @Size(min = 4, max = 2000)
     private String bookDescription;
 
 
     @NotNull
-    @Size(min = 2, max = 40)
+    @Size(min = 2, max = 100)
     private String bookAuthor;
 
 
@@ -36,7 +36,7 @@ public class Book {
     private String bookImage;
 
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
     @JoinTable(name = "book_category", joinColumns = @JoinColumn(name = "bookID"),
             inverseJoinColumns = @JoinColumn(name = "categoryID"))
     private List<Category> bookCategories;

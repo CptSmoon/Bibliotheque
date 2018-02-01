@@ -21,6 +21,7 @@
 
         <th>Category ID:</th>
         <th>Category name:</th>
+        <th>Action:</th>
     </thead>
     <tbody>
     <th:block th:each="cat : ${categories}">
@@ -28,7 +29,12 @@
             <td th:text="${cat.categoryID}"></td>
 
             <td th:text="${cat.categoryName}"></td>
+            <td>
+                <a th:href="@{|/category/edit/${cat.categoryID}|}">edit</a>
+                <a th:href="@{|/category/delete/${cat.categoryID}|}">Delete</a>
+            </td>
         </tr>
+
     </th:block>
     </tbody>
 </table>

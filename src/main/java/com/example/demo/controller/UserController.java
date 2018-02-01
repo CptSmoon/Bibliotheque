@@ -36,7 +36,7 @@ public class UserController {
 
 //        validator.validate(user,bindingResult);
         if(userRepository.findAllByUserMail(user.getUserMail()).size()!=0) {
-            bindingResult.rejectValue("userMail", "email.existant", "email deja existant");
+            bindingResult.rejectValue("userMail",   "email.existant", "email deja existant");
             return new ModelAndView("userAdder");
 
         }
@@ -69,6 +69,13 @@ public class UserController {
     @PostMapping("/edit")
     public ModelAndView editSubmit(@ModelAttribute User user) {
         userRepository.save(user);
+        return new ModelAndView("redirect:/user/all");
+    }
+
+    @GetMapping("/delete/{id}")
+    public ModelAndView deleteUser(@PathVariable("id") Integer id, Model model) {
+
+        userRepository.delete(userRepository.findOne(id));
         return new ModelAndView("redirect:/user/all");
     }
 

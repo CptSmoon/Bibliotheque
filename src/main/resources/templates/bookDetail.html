@@ -12,6 +12,8 @@
     <script type="text/javascript" th:src="@{/js/viewer.js}"></script>
 
     <script type="text/javascript" th:src="@{/bootstrap-3.3.7/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/viewer.js}"></script>
+    <script type="text/javascript" th:src="@{/js/jquery.gdocsviewer.min.js}"></script>
 
 
 </head>
@@ -46,14 +48,18 @@
                     </h5>
 
                     <div class="action">
-                        <button class="add-to-cart btn btn-default" type="button">Read</button>
+                        <a class="add-to-cart btn btn-default" th:href="@{|/path/${book.bookPath}|}" type="button">Read</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
 </div>
 <script>
+    $('a.embed').gdocsViewer();
+
+
     if (typeof jQuery == 'undefined') {
         console.log("Jquery not imported");
     }

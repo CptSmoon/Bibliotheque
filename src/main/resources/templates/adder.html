@@ -38,7 +38,7 @@
 
             <div class="form-group">
             <label for="description">Book Description </label>
-                <textarea class="form-control" placeholder="Description" id="description" th:field="*{bookDescription}"></textarea>
+                <textarea required="required" class="form-control" placeholder="Description" id="description" th:field="*{bookDescription}"></textarea>
             <small th:if="${#fields.hasErrors('bookDescription')}" th:errors="*{bookDescription}"></small>
             </div>
 

@@ -6,6 +6,7 @@ import com.example.demo.models.FormBook;
 import com.example.demo.repositories.BookRepository;
 import com.example.demo.repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.context.restart.RestartEndpoint;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -48,8 +49,8 @@ public class BookController {
 
     private static String IMAGE_UPLOAD_FOLDER = "src/main/resources/static/img/";
     private static String PATH_UPLOAD_FOLDER = "src/main/resources/static/path/";
-    private static long MAX_FILE_SIZE = 10000000;
-    private static long MAX_IMAGE_SIZE = 20000000;
+    private static long MAX_FILE_SIZE = 1000000000;
+    private static long MAX_IMAGE_SIZE = 2000000000;
 
     BookController(){
         patternBook = Pattern.compile(BOOK_PATTERN);
@@ -69,7 +70,7 @@ public class BookController {
 
     @PostMapping("/add")
     public ModelAndView addSubmit(
-            @Valid @ModelAttribute FormBook bookForm,
+            @ModelAttribute("bookForm") FormBook bookForm,
             BindingResult bindingResult,
             @RequestParam("image") MultipartFile image,
             @RequestParam("file") MultipartFile file, ModelMap model) {
@@ -83,13 +84,19 @@ public class BookController {
         Book book = new Book(bookForm,categories);
         if (!file.isEmpty()) {
             try{
-                matcherBook = patternBook.matcher(file.getOriginalFilename());
-                if (!matcherBook.matches()) {
+
+                if(file.getOriginalFilename().length()<=4){
+                    bindingResult.rejectValue("bookPath", "fichier.errone", "size is less");
+                }
+                else if(!file.getOriginalFilename().substring(file.
+                        getOriginalFilename().length() - 4).equals(".pdf"))
+                {
                     bindingResult.rejectValue("bookPath", "fichier.errone", "Wrong file format");
                 }
                 else if(file.getSize()>MAX_FILE_SIZE){
                     bindingResult.rejectValue("bookPath", "fichier.taille", "File limit exceeded MAX : "+MAX_FILE_SIZE);
                 }
+
             }
             catch(NullPointerException Ex){
                 Ex.printStackTrace();
@@ -98,13 +105,12 @@ public class BookController {
             try {
                 // Get the file and save it somewhere
                 byte[] bytes = file.getBytes();
-                String ran1 = RandomStringUtils.randomAlphabetic(6);
+                String ran1 = RandomStringUtils.randomAlphabetic(20);
 
-                String name1 = ran1+"_"+ file.getOriginalFilename();
-                Path path1 = Paths.get(PATH_UPLOAD_FOLDER +name1);
+                Path path1 = Paths.get(PATH_UPLOAD_FOLDER +ran1+".pdf");
 
                 Files.write(path1, bytes);
-                book.setBookPath(file.getOriginalFilename());
+                book.setBookPath(ran1+".pdf");
 
             } catch (IOException e) {
                 book.setBookPath("no path");
@@ -179,9 +185,10 @@ public class BookController {
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteBook(@PathVariable("id") Integer id, Model model) {
-        BookRepository.delete(id);
-        return "lister";
+    public ModelAndView deleteBook(@PathVariable("id") Integer id, Model model) {
+
+        BookRepository.delete(BookRepository.findOne(id));
+        return new ModelAndView("redirect:/book/all");
     }
 
 }

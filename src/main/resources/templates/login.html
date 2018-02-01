@@ -24,10 +24,10 @@
     <div class=" card card-container">
         <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
         <p id="profile-name" class="profile-name-card"></p>
-        <form action="login" class="form-signin">
+        <form th:object="${formUser}" th:action="@{/loginp}" th:method="POST" class="form-signin">
             <span id="reauth-email" class="reauth-email"></span>
-            <input type="text" id="inputLogin" class="form-control" placeholder="Login" required="required" autofocus="autofocus"/>
-            <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="required"/>
+            <input th:field="*{userLogin}" type="text" id="inputLogin" class="form-control" placeholder="Login" required="required" autofocus="autofocus"/>
+            <input th:field="*{userPassword}" type="password" id="inputPassword" class="form-control" placeholder="Password" required="required"/>
             <div id="remember" class="checkbox">
                 <label>
                     <input type="checkbox" value="remember-me"> Remember me</input >

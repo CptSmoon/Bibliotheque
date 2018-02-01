@@ -11,9 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AdminController {
     @GetMapping("/")
     public String indexPage(ModelMap model) {
-
-
-
         return "index";
     }
 

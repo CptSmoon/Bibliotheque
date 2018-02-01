@@ -26,6 +26,7 @@
         <th>User last name</th>
         <th>User e-mail</th>
         <th>User login</th>
+        <th>Actions</th>
     </tr>
     </thead>
     <tbody>
@@ -36,6 +37,10 @@
             <td th:text="${user.userMail}"> </td>
             <td th:text="${user.userLogin}"></td>
             <td th:text="${user.userLastName}"> </td>
+            <td>
+            <a th:href="@{|/user/edit/${user.userID}|}">edit</a>
+            <a th:href="@{|/user/delete/${user.userID}|}">Delete</a>
+            </td>
 
         </tr>
     </th:block>

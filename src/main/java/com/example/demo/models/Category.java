@@ -19,7 +19,7 @@ public class Category {
     @Size(min = 2, max = 40)
     private String categoryName;
 
-    @ManyToMany(mappedBy = "bookCategories")
+    @ManyToMany(mappedBy = "bookCategories",cascade = { CascadeType.MERGE, CascadeType.PERSIST }    )
     private List<Book> categoryBooks;
 
     //Getters et setters

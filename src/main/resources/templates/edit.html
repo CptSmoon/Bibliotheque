@@ -3,14 +3,22 @@
     <title>Edit a Book</title>
     <link href="../static/bootstrap-3.3.7/css/bootstrap.css"
           th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>
+    <link th:href="@{/css/file.css}" rel="stylesheet" media="screen"/>
+    <link th:href="@{/css/imageUpload.css}" rel="stylesheet" media="screen"/>
+    <link th:href="@{/css/select2.min.css}" rel="stylesheet" media="screen"/>
+
     <script type="text/javascript" th:src="@{/jquery/jquery-3.3.1.js}"></script>
     <script type="text/javascript" th:src="@{/bootstrap-3.3.7/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/file.js}"></script>
+    <script type="text/javascript" th:src="@{/js/imageUpload.js}"></script>
+    <script type="text/javascript" th:src="@{/js/select2.js}"></script>
 
     <link th:href="@{/css/index.css}" rel="stylesheet" media="screen"/>
 
 </head>
 <body>
 <div th:replace="fragments/header :: header"></div>
+<div class="container col-8">
 <h1>Edit a Book</h1>
 
 <form method="POST" action="#"  th:action="@{/book/edit}" th:object="${book}" >
@@ -40,9 +48,10 @@
         </tr>
 
         <tr>
-            <td><input type="submit" value="Submit"/><input type="reset" value="Reset" /></td>
+            <td><input disabled="disabled" type="submit" value="Submit"/><input type="reset" value="Reset" /></td>
         </tr>
     </table>
 </form>
+</div>
 </body>
 </html>
