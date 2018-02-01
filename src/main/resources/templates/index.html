@@ -14,12 +14,8 @@
     <script type="text/javascript" th:src="@{/bootstrap-3.3.7/js/bootstrap.min.js}"></script>
 
 
-    <!--<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>-->
-    <!--<script src="../static/js/datatable.js"></script>-->
-    <!--<div th:replace="fragments/header :: header-css"/>-->
 </head>
 <body>
-<!--<div th:replace="fragments/header :: header"/>-->
 
 
 <div th:replace="fragments/header :: header">
@@ -38,10 +34,7 @@
                             class="btn btn-default" type="submit" data-toggle="tooltip" data-placement="top" title="Details">
                         <i class="fa fa-info"></i>
                     </a>
-                    <a th:href="@{|/book/read/${book.bookID}|}"
-                            class="btn btn-default" type="submit" data-toggle="tooltip" data-placement="top" title="Read">
-                        <i class="fa fa-book"></i>
-                    </a>
+
                 </div>
 
                 <a href="#"> <img th:src="@{|/img/${book.getBookImage()}|}" class="img-responsive" alt="Product Image" /> </a>
@@ -51,8 +44,8 @@
                     <div class="price-details col-md-6">
                         <p th:text="${book.bookDescription}" class="details">
                         </p>
-                        <h1 th:text="${book.bookDescription}">Book Title will be here </h1>
-                        <span th:text="${book.bookAuthor}" class="price-new">Book Author</span>
+                        <h1 th:text="${book.bookAuthor}">Book Title will be here </h1>
+                        <span th:text="${book.bookTitle}" class="price-new">Book Author</span>
                     </div>
                 </div>
             </div>

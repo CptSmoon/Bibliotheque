@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.models.Book;
 import com.example.demo.models.Category;
 import com.example.demo.models.FormBook;
+import com.example.demo.models.User;
 import com.example.demo.repositories.BookRepository;
 import com.example.demo.repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.apache.commons.lang3.RandomStringUtils;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -57,7 +59,17 @@ public class BookController {
         patternImage = Pattern.compile(IMAGE_PATTERN);}
 
     @GetMapping("/add")
-    public String addForm(ModelMap model) {
+    public String addForm(HttpSession session, ModelMap model) {
+        if(session.getAttribute("USER")==null){
+            return "redirect:/login";
+
+        };
+
+        if(!(((User) session.getAttribute("USER"))
+                .getUserRole().equals("ROLE_ADMIN"))) {
+            return "redirect:/login";
+        };
+
         model.addAttribute("bookForm", new FormBook());
         model.addAttribute("categories", categoryRepository.findAll());
         Vector <Integer> V = new Vector<Integer>();
@@ -69,13 +81,21 @@ public class BookController {
     }
 
     @PostMapping("/add")
-    public ModelAndView addSubmit(
+    public ModelAndView addSubmit(HttpSession session,
             @ModelAttribute("bookForm") FormBook bookForm,
             BindingResult bindingResult,
             @RequestParam("image") MultipartFile image,
             @RequestParam("file") MultipartFile file, ModelMap model) {
 
+        if(session.getAttribute("USER")==null){
+            return new ModelAndView("redirect:/login");
 
+        };
+
+        if(!(((User) session.getAttribute("USER"))
+                .getUserRole().equals("ROLE_ADMIN"))) {
+            return new ModelAndView("redirect:/login");
+        };
         List<Category> categories = new Vector<Category>();
         for(Integer i : bookForm.getCategoriesIDs()){
             Category c = categoryRepository.findByCategoryID(i);
@@ -158,20 +178,38 @@ public class BookController {
     }
 
     @GetMapping(path = "/all")
-    public String getAllBooks(Model model) {
+    public String getAllBooks(HttpSession session,Model model) {
+        if(session.getAttribute("USER")==null){
+            return "redirect:/login";
+        };
+        if(!(((User) session.getAttribute("USER"))
+                .getUserRole().equals("ROLE_ADMIN"))) {
+            return "redirect:/login";
+        };
         model.addAttribute("books", BookRepository.findAll());
         return "lister";
     }
 
     @GetMapping("/edit/{id}")
-    public String editForm(@PathVariable("id") Integer id, Model model) {
+    public String editForm(HttpSession session,@PathVariable("id") Integer id, Model model) {
+        if(session.getAttribute("USER")==null){
+            return "redirect:/login";
+        };
+        if(!(((User) session.getAttribute("USER"))
+                .getUserRole().equals("ROLE_ADMIN"))) {
+            return "redirect:/login";
+        };
         Book b = BookRepository.findOne(id);
         model.addAttribute("book", b);
         return "edit";
     }
 
     @GetMapping("/details/{id}")
-    public String detailsBook(@PathVariable("id") Integer id, Model model) {
+    public String detailsBook(HttpSession session,@PathVariable("id") Integer id, Model model) {
+        if(session.getAttribute("USER")==null){
+            return "redirect:/login";
+        };
+
         Book b = BookRepository.findOne(id);
         model.addAttribute("book", b);
         return "bookDetail";
@@ -179,14 +217,28 @@ public class BookController {
 
     @PostMapping("/edit")
 
-    public ModelAndView editSubmit(@ModelAttribute Book book) {
+    public ModelAndView editSubmit(HttpSession session,@ModelAttribute Book book) {
+        if(session.getAttribute("USER")==null){
+            return new ModelAndView("redirect:/login");
+        };
+        if(!(((User) session.getAttribute("USER"))
+                .getUserRole().equals("ROLE_ADMIN"))) {
+            return new ModelAndView("redirect:/login");
+        };
         BookRepository.save(book);
         return new ModelAndView("redirect:/book/all");
     }
 
     @GetMapping("/delete/{id}")
-    public ModelAndView deleteBook(@PathVariable("id") Integer id, Model model) {
+    public ModelAndView deleteBook(HttpSession session,@PathVariable("id") Integer id, Model model) {
+        if(session.getAttribute("USER")==null){
+            return new ModelAndView("redirect:/login");
 
+        };
+        if(!(((User) session.getAttribute("USER"))
+                .getUserRole().equals("ROLE_ADMIN"))) {
+            return new ModelAndView("redirect:/login");
+        };
         BookRepository.delete(BookRepository.findOne(id));
         return new ModelAndView("redirect:/book/all");
     }

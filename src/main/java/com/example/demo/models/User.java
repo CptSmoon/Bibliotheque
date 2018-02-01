@@ -1,6 +1,9 @@
 package com.example.demo.models;
 
+import com.example.demo.repositories.UserRepository;
 import org.hibernate.validator.constraints.Email;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -8,11 +11,13 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
+import java.util.Vector;
 
 
 //implementing Serializable to be able to make it a 3 ID bean
 @Entity
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer userID;
@@ -37,14 +42,22 @@ public class User {
     @Size(min = 8, max = 30)
     private String userPassword;
 
-    @ManyToMany
+    @Column(name="isConnected")
+    private boolean isConnected=false;
+
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
+
             name = "users_roles",
             joinColumns = @JoinColumn(
                     name = "user_id", referencedColumnName = "userID"),
             inverseJoinColumns = @JoinColumn(
                     name = "role_id", referencedColumnName = "id"))
     private Collection<Role> roles;
+
+    public User() {
+        isConnected = false;
+    }
 
 
     public Integer getUserID() {
@@ -102,5 +115,21 @@ public class User {
 
     public Collection<Role> getRoles() {
         return roles;
+    }
+
+    public String getUserRole(){
+        if(roles.size()!=1){
+            return "None";
+        }
+        List<Role> l = (List<Role>) roles;
+        return l.get(0).getName();
+    }
+
+    public boolean isConnected() {
+        return isConnected;
+    }
+
+    public void setConnected(boolean connected) {
+        isConnected = connected;
     }
 }

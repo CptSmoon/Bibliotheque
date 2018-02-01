@@ -1,0 +1,39 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Login</title>
+    <link href="../static/css/index.css" th:href="@{css/index.css}" rel="stylesheet" media="screen"/>
+
+    <link href="../static/bootstrap-3.3.7/css/bootstrap.css"
+          th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>
+    <script type="text/javascript" th:src="@{/jquery/jquery-3.3.1.js}"></script>
+    <script type="text/javascript" th:src="@{/bootstrap-3.3.7/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/login.js}"></script>
+
+    <link th:href="@{/css/login.css}" rel="stylesheet" media="screen"/>
+
+</head>
+<body>
+
+
+<div th:replace="fragments/header :: header">
+
+</div>
+
+<div class="container ">
+    <div class=" card card-container">
+        <h1>Sorry, Error :(</h1>
+    </div>
+</div>
+<a th:href="/">Get Back To Login Page</a>
+<script>
+    if(typeof jQuery == 'undefined'){
+        console.log("Jquery not imported");
+    }
+    else{
+        console.log("imported");
+    }
+</script>
+
+</body>
+</html>

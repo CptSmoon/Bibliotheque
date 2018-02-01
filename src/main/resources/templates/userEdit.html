@@ -1,47 +1,64 @@
 <html xmlns:th="http://www.thymeleaf.org">
-
 <head>
-    <title>Add user</title>
+    <title>Edit a User</title>
+    <link href="../static/bootstrap-3.3.7/css/bootstrap.css"
+          th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" rel="stylesheet" media="screen"/>
+    <link th:href="@{/css/file.css}" rel="stylesheet" media="screen"/>
+    <link th:href="@{/css/imageUpload.css}" rel="stylesheet" media="screen"/>
+    <link th:href="@{/css/select2.min.css}" rel="stylesheet" media="screen"/>
+
+    <script type="text/javascript" th:src="@{/jquery/jquery-3.3.1.js}"></script>
+    <script type="text/javascript" th:src="@{/bootstrap-3.3.7/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/file.js}"></script>
+    <script type="text/javascript" th:src="@{/js/imageUpload.js}"></script>
+    <script type="text/javascript" th:src="@{/js/select2.js}"></script>
+
+    <link th:href="@{/css/index.css}" rel="stylesheet" media="screen"/>
+
 </head>
 <body>
+<div th:replace="fragments/header :: header"></div>
+<div class="container col-8">
 <h1>Edit a User</h1>
-    <div class="container col-8">
+<div  class="form-group">
 <form method="POST" action="#"  th:action="@{/user/edit}" th:object="${user}" >
     <table>
         <tr>
-            <td><input id="id" type="hidden" th:field="*{userID}"/></td>
+            <td><input class="form-control" id="id" type="hidden" th:field="*{userID}"/></td>
         </tr>
         <tr>
             <td><label for="firstName" >First name </label></td>
-            <td><input  id="firstName" type="text" th:field="*{userFirstName}"/></td>
+            <td><input class="form-control" id="firstName" type="text" th:field="*{userFirstName}"/></td>
             <td th:if="${#fields.hasErrors('userFirstName')}" th:errors="*{userFirstName}"></td>
         </tr>
         <tr>
             <td><label for="lastName" >Last name </label></td>
-            <td><input id="lastName" type="text" th:field="*{userLastName}"/></td>
+            <td><input class="form-control" id="lastName" type="text" th:field="*{userLastName}"/></td>
             <td th:if="${#fields.hasErrors('userLastName')}" th:errors="*{userLastName}"></td>
 
         </tr>
         <tr>
             <td><label for="email" >E-mail </label></td>
-            <td><input id="email" type="email" th:field="*{userMail}"/></td>
+            <td><input class="form-control" id="email" type="email" th:field="*{userMail}"/></td>
             <td th:if="${#fields.hasErrors('userMail')}" th:errors="*{userMail}"></td>
         </tr>
         <tr>
             <td><label for="login" >Login </label></td>
-            <td><input id="login" type="text" th:field="*{userLogin}"/></td>
+            <td><input class="form-control" id="login" type="text" th:field="*{userLogin}"/></td>
             <td th:if="${#fields.hasErrors('userLogin')}" th:errors="*{userLogin}"></td>
         </tr>
         <tr>
             <td><label for="password" >Password </label></td>
             <td><input id="password" type="password" th:field="*{userPassword}"/></td>
             <td th:if="${#fields.hasErrors('userPassword')}" th:errors="*{userPassword}"></td>
+
         </tr>
 
         <tr>
-            <td><input type="submit" value="Submit"/><input type="reset" value="Reset" /></td>
+            <td><input class="form-control" type="submit" value="Submit"/><input class="form-control"  type="reset" value="Reset" /></td>
         </tr>
     </table>
-</form></div>
+</form>
+</div></div>
 </body>
 </html>

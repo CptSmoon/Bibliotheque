@@ -55,8 +55,18 @@
 </div>
 <script>
     $(document).ready( function () {
-        $('#booksTable').DataTable();
+        $('#booksTable').DataTable( {
+                                        columnDefs: [ {
+                                            targets: 3,
+                                            render: function ( data, type, row ) {
+                                                return data.substr( 0, 50 )+"...";
+                                            }
+                                        } ]
+                                    }   );
+
     } );
+
+
 </script>
 
 </body>
