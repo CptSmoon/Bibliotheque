@@ -89,9 +89,9 @@ public class PublicController {
     }
 
 
-    @RequestMapping(value = "/Access_Denied", method = RequestMethod.GET)
+    @RequestMapping(value = "/error", method = RequestMethod.GET)
     public String accessDeniedPage(ModelMap model) {
-        return "accessDenied";
+        return "error";
     }
 
     @RequestMapping(value = "/subscribe", method = RequestMethod.GET)

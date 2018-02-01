@@ -6,6 +6,7 @@ import com.example.demo.models.FormBook;
 import com.example.demo.models.User;
 import com.example.demo.repositories.BookRepository;
 import com.example.demo.repositories.CategoryRepository;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.restart.RestartEndpoint;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -233,13 +235,20 @@ public class BookController {
     public ModelAndView deleteBook(HttpSession session,@PathVariable("id") Integer id, Model model) {
         if(session.getAttribute("USER")==null){
             return new ModelAndView("redirect:/login");
-
         };
+
         if(!(((User) session.getAttribute("USER"))
                 .getUserRole().equals("ROLE_ADMIN"))) {
             return new ModelAndView("redirect:/login");
         };
-        BookRepository.delete(BookRepository.findOne(id));
+        Book b =BookRepository.findOne(id);
+
+        File filePDF = FileUtils.getFile("src/test/resources/static/path/"+b.getBookPath());
+        File fileIMG = FileUtils.getFile("src/test/resources/static/img/"+b.getBookImage());
+        FileUtils.deleteQuietly(filePDF);
+        FileUtils.deleteQuietly(fileIMG);
+
+        BookRepository.delete(b);
         return new ModelAndView("redirect:/book/all");
     }
 
